@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -54,35 +54,36 @@
                             </tr>
                         </thead>
                         <tbody>
-<?php
-require_once 'conn.php';
-$query = "SELECT id, title, description, created_at FROM crud_php";
-$result = $conn->query($query);
-
-if($result->num_rows > 0){
-    while ($row = $result->fetch_assoc()){
-        ?>
-                            <tr>
-                                <td><?php echo $row['id'];?></td>
-                                <td><?php echo $row['title'];?></td>
-                                <td><?php echo $row['description'];?></td>
-                                <td><?php echo $row['created_at'];?></td>
-                                <td><a href="#" class="btn btn-secondary">
-
-                                        <i class="fas fa-marker"></i>
-                                    </a>
-                                    <a href="delete.php?id=<?=$row['id']; ?>" class="btn btn-danger">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            </tr>  
                             <?php
+                            require_once 'conn.php';
+                            $query = "SELECT id, title, description, created_at FROM crud_php";
+                            $result = $conn->query($query);
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                            ?>
+                                    <tr>
+
+                                        <td><?php echo $row['id']; ?></td>
+                                        <td><?php echo $row['title']; ?></td>
+                                        <td><?php echo $row['description']; ?></td>
+                                        <td><?php echo $row['created_at']; ?></td>
+                                        <td><a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-secondary">
+
+                                                <i class="fas fa-marker"></i>
+                                            </a>
+                                            <a href="delete.php?id=<?= $row['id']; ?>" class="btn btn-danger">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>Nenhuma tarefa encontrada!</td></tr>";
                             }
-                         }  else {
-                            echo "<tr><td colspan='5'>Nenhuma tarefa encontrada!</td></tr>";
-                         }
-                         $conn->close();
-                         ?>
+                            $conn->close();
+                            ?>
 
                         </tbody>
                     </table>
